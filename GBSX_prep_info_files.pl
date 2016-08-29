@@ -1,6 +1,11 @@
 use strict;
 use warnings;
+
 use FileHandle;
+
+if ( scalar @ARGV != 1 )	{ die "usage:\nperl GBSX_prep_info_files.pl (key file to use)\n";	}
+
+my $key = $ARGV[0];
 
 my $lc = 0;
 
@@ -8,7 +13,9 @@ my %fh = ();
 
 if ( ! -e "GBSX_info_files" )	{	system( "mkdir GBSX_info_files" )	}
 
-open ( 'KEY' , '</home/smyles/myles_lab/apple_GBS/Tassel5_realign/keyfiles/20151116_gbs_keyfile_usda_abc_cet_barcode_splitter.txt' ) or die "can't open KEY\n";
+#open ( 'KEY' , '</home/smyles/myles_lab/apple_GBS/Tassel5_realign/keyfiles/20151116_gbs_keyfile_usda_abc_cet_barcode_splitter.txt' ) or die "can't open KEY\n";
+
+open ( 'KEY' , '<' , $key ) or die "can't open KEY $key\n";
 while( <KEY> )	{
 		
 	my @s = split( '[\t\n]' , $_ );
