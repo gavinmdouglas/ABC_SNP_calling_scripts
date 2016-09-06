@@ -65,7 +65,7 @@ while( <KEY> )	{
 	if ( length( $Col ) == 1 )	{	$Col = "0" . $Col 	} 
 	my $well = $Row . $Col;
 	
-	my $fastq = "$in_dir/$flowcell"."_"."$lane"."_"."$plate"."/".$plate."_".$well."_".$DNASample.".trimmed.fastq.gz";
+	my $fastq = "$in_dir/$flowcell"."_"."$lane"."/".$plate."_".$well."_".$DNASample.".trimmed.fastq.gz";
 	
 	
 	my $apple_id = $s[ $indices{"apple_id"} ];

@@ -52,7 +52,7 @@ while( <KEY> )	{
 	my $enzyme = $s[ $indices{"Enzyme"} ];
 	my $plate = $s[ $indices{"LibraryPlate"} ];
 	
-	my $info = $flowcell . "_" . $lane . "_" . $plate ;
+	my $info = $flowcell . "_" . $lane ;
 	
 	$info2enzyme{$info} = $enzyme;
 
