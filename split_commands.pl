@@ -1,23 +1,14 @@
 use strict;
 use warnings;
 
-if ( scalar @ARGV != 3 )	{	die "(commands in file) (number of commands per file) (text file containing header for sh scripts)\n";	}
+if ( scalar @ARGV != 3 )	{	die "(textfile with 1 command per line) (number of commands per file) (text file containing header for sh scripts)\n";	}
 
-
+### reading in header to use from specified file:
 my $settings = "";
 open( 'HEAD' , '<' , $ARGV[2] ) or die "cant open HEADER file $ARGV[2]\n";
 while( <HEAD> )	{
 	$settings = $settings . "$_";
 } close( 'HEAD' );
-
-#my $settings = "#\$ -cwd
-#\$ -j y
-#\$ -l h_rt=47:00:00
-#\$ -l h_vmem=1G\n";
-###\$ -l os=RHEL6
-#module unload java
-#module load java/8u45\n";
-#module load bwa\n";
 
 my $file_num = 0;
 my $count = 0;
