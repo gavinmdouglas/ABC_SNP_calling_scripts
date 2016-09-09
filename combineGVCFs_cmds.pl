@@ -3,38 +3,44 @@
 use warnings;
 use strict;
 
-if ( scalar @ARGV != 2 )	{	die "(in dir) (out dir)\n";	}
+if ( scalar @ARGV != 5 )	{	die "(in dir) (number samples per combined GVCF) (out dir) (Path to GATK jarfile) (Path to reference fasta)\n"	}
 
 my $in_dir = $ARGV[0];
-my $out_dir = $ARGV[1];
+my $num = $ARGV[1];
+my $out_dir = $ARGV[2];
+my $GATK = $ARGV[3];
+my $ref = $ARGV[4];
 
 opendir(DIR, $in_dir ) or die "cannot open DIR $in_dir\n";
 my @f = grep(/\.vcf$/ ,readdir(DIR));
 
-my $c = 0;
-my $g = 0;
+my $c = 0; ### sample count
+my $g = 0; ### rep count
+
+if ( ! -e $out_dir )	{	system( "mkdir $out_dir" )	}
 
 foreach my $f ( @f )	{
 
 	$f = $in_dir . "/". $f;
 
 	if ( $c == 0 )	{
-		print " java -jar /usr/local/prg/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar  -T CombineGVCFs \    -R /home/gavin/myles_lab/apple_cet/tassel_redo/Malus_x_domestica.v1.0-primary.pseudo_plus_Unass_UI.fa "; 
+		print " java -jar $GATK  -T CombineGVCFs \    -R $ref "; 
 	}
 
 	print "--variant $f ";
 	
 	++$c;
 
-	if ( $c == 49 )	{
+	if ( $c == $num )	{
 		$c = 0;
-		print "-o $out_dir/$g"."_combined.vcf 2> $out_dir/$g"."_combined.vcf.log &\n\n";
+		print "-o $out_dir/$g"."_combined.vcf 2> $out_dir/$g"."_combined.vcf.log\n\n";
 		++$g;
 	}
 	
 }
 closedir(DIR);
 
-if ( $c != 49 )	{
-	print "-o $out_dir/$g"."_combined.vcf 2> $out_dir/$g"."_combined.vcf.log &\n\n";
+if ( $c != $num )	{
+	print "-o $out_dir/$g"."_combined.vcf 2> $out_dir/$g"."_combined.vcf.log\n\n";
 }
+
