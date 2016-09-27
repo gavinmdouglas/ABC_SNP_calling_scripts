@@ -3,6 +3,11 @@
 use warnings;
 use strict;
 
+if ( scalar @ARGV != 2 )	{	die "usage: perl samtools_overlap_set.pl (combined VCF of all 3 SNP callers) (samples to keep, 1 per line)\n";	}
+
+my $combined_vcf = $ARGV[0];
+my $samples2keep = $ARGV[1];
+
 my %samtools = ();
 
 my %o = (); ### sites as keys and hash of snp callers that called that site as values
@@ -17,7 +22,7 @@ my @header = qw(CHROM POS ID REF ALT QUAL FILTER INFO FORMAT );
 
 $header[0] = "#" . $header[0];
 
-open( 'SAMPLES' , '<samples2keep.txt' ) or die "cant open SAMPLES samples2keep.txt\n";
+open( 'SAMPLES' , '<' , $samples2keep ) or die "cant open SAMPLES $samples2keep\n";
 while( <SAMPLES> )	{
 	my @s = split( '\s+' , $_ );
 	push( @header , $s[0] );
@@ -26,7 +31,7 @@ while( <SAMPLES> )	{
 my $header_out = join( "	" , @header );
 print "$header_out\n";
 
-open( 'VCF' , '<GATK_samtools_tassel_combined_raw.vcf'  ) or die "cant open VCF GATK_samtools_tassel_combined_raw.vcf\n";
+open( 'VCF' , '<' , $combined_vcf  ) or die "cant open VCF $combined_vcf\n";
 while( <VCF> )	{
 		
 	my @s = split( '\t+' , $_ );
@@ -41,7 +46,7 @@ while( <VCF> )	{
 
 } close( 'VCF' );	
 			
-open( 'VCF' , '<GATK_samtools_tassel_combined_raw.vcf'  ) or die "cant open VCF GATK_samtools_tassel_combined_raw.vcf\n";
+open( 'VCF' , '<' , $combined_vcf  ) or die "cant open VCF $combined_vcf\n";
 while( <VCF> )	{
 		
 	my @s = split( '\t+' , $_ );

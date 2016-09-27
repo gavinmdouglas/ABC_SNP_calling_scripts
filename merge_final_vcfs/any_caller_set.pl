@@ -3,6 +3,11 @@
 use warnings;
 use strict;
 
+if ( scalar @ARGV != 2 )	{	die "usage: perl any_caller_set.pl (combined VCF of all 3 SNP callers) (samples to keep, 1 per line)\n";	}
+
+my $combined_vcf = $ARGV[0];
+my $samples2keep = $ARGV[1];
+
 my %s = (); ### pos as key and every possible site at that pos as value
 
 print "##fileformat=VCFv4.0
@@ -15,7 +20,7 @@ my @header = qw(CHROM POS ID REF ALT QUAL FILTER INFO FORMAT );
 
 $header[0] = "#" . $header[0];
 
-open( 'SAMPLES' , '<samples2keep.txt' ) or die "cant open SAMPLES samples2keep.txt\n";
+open( 'SAMPLES' , '<' , $samples2keep ) or die "cant open SAMPLES $samples2keep\n";
 while( <SAMPLES> )	{
 	my @s = split( '\s+' , $_ );
 	push( @header , $s[0] );
@@ -26,7 +31,7 @@ print "$header_out\n";
 
 my @pos_order = ();
 
-open( 'VCF' , '<GATK_samtools_tassel_combined_raw.vcf'  ) or die "cant open VCF GATK_samtools_tassel_combined_raw.vcf\n";
+open( 'VCF' , '<' , $combined_vcf  ) or die "cant open VCF $combined_vcf\n";
 while( <VCF> )	{
 		
 	my @s = split( '\t+' , $_ );
