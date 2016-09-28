@@ -4,7 +4,7 @@ This repository contains the scripts used to help automate the ABC SNP calling a
   
 This README contains a brief description of each script included (note that the majority of these scripts are simple wrappers). 
   
-The [wiki pages](https://github.com/gavinmdouglas/ABC_SNP_calling_scripts/wiki) of this repository contain the commands used for a few different pipelines:  
+The [wiki pages](https://github.com/gavinmdouglas/Myles_GBS_analysis/wiki) of this repository contain the commands used for a few different pipelines:  
   
 * Deconvolution of raw FASTQs and quality filtering and read mapping
 * SNP calling with GATK and samtools
