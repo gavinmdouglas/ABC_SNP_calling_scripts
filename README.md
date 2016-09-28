@@ -1,6 +1,6 @@
-# ABC SNP calling pipeline
+# Myles GBS analysis
   
-This repository contains the scripts used to help automate the ABC SNP calling and analysis pipeline.
+This repository contains the scripts used to help automate the ABC SNP calling and analysis pipeline. It also contains additional stand-alone workflows and scripts that can be used to analyze GBS data in general.
   
 This README contains a brief description of each script included (note that the majority of these scripts are simple wrappers). 
   
