@@ -23,6 +23,7 @@ my $lc = 0; # line count, important to figure out which is header
 ### column indices for apple_id and enzyme, which will be figured out when header line is read in
 my $apple_id_index;
 my $enzyme_index;
+my $full_sample_name_index;
 
 ### read through input keyfile:
 open ( 'KEY' , '<' , $input_key  ) or die "can't open KEY $input_key\n";
@@ -43,13 +44,15 @@ while( <KEY> )	{
 				$apple_id_index = $index;
 			} elsif ( $s eq "Enzyme" )	{
 				$enzyme_index = $index;
+			} elsif ( $s eq "FullSampleName" ) {
+				$full_sample_name_index = $index;				
 			}
-			
+
 			++$index;
 		}			
 
 
-		$s[14] = $s[14] . "_old";	### change name of "FullSampleName" in keyfile	
+		$s[ $full_sample_name_index ] = $s[ $full_sample_name_index ] . "_old";	### change name of "FullSampleName" in keyfile	
 		
 		unshift( @s , "FullSampleName"); ### add new column called "FullSampleName"
 		my $h = join( "	" , @s );
